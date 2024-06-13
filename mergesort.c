@@ -1,50 +1,53 @@
 #include<stdio.h>
-void merge(int a[],int lb,int mid,int ub);
- void mergesort(int a[],int lb,int ub){
-    if(lb<ub){
-        int mid=(lb+ub)/2;
-        mergesort(a,lb,mid); //recursive call
-        mergesort(a,mid+1,ub);
-        merge(a,lb,mid,ub);
-    }
-}
-void merge(int a[],int lb,int mid,int ub){
-    int p[ub+1]; //temporary array
+void merge(int A[5],int lb, int mid, int ub){
+    int b[5];
     int i=lb,j=mid+1,k=lb;
     while(i<=mid && j<=ub){
-        if(a[i]<=a[j]){
-            p[k]=a[i];
-            k++;i++;
-            }
-     else{
-        p[k]=a[j];
-        j++;k++;
-        }  
-        if(i>mid){
-            while(j<=ub){
-                p[k]=a[j];
-                j++;k++;
-            }
+        if(A[i]<A[j]){
+            b[k]=A[i];
+            i++;
+            k++;
         }
-        if(j>ub){
-            while(i<=mid){
-                p[k]=a[i];
-                i++;k++;
+        
+        else{
+            b[k]=A[j];
+            j++; 
+            k++;
             }
+    }
+    if(i>mid){
+        while(j<=ub){
+            b[k]=A[j];
+            j++;
+            k++;
         }
-     }
-     for(k=lb;k<=ub;k++){
-        a[k]=p[k]; //copying to original array
-     }
+    }
+    if(j>ub){
+        while(i<=mid){
+            b[k]=A[i];
+            i++;
+            k++;
+        }
+    }
+    for(k=lb;k<=ub;k++){
+        A[k]=b[k];
+    }
+}
+void mergeSort(int A[5],int lb,int ub){
+    if(lb<ub){
+    int mid=((lb+ub)/2);
+    mergeSort(A,lb,mid);
+    mergeSort(A,mid+1,ub);
+    merge(A,lb,mid,ub);
+    }
 }
 int main(){
-    int k;
-    int s[]={80,6,47,1,30,2,9,11};
-    printf("sorted array: \n");
-    mergesort(s,0,7);
-     for(k=0;k<8;k++){
-        printf("%d \t",s[k]);
-     }
-   return 0;
+    int A[5]={7,4,3,1,2};
+    mergeSort(A,0,4);
+    printf("Sorted Array: \n");
+    for(int i=0;i<5;i++){
+        printf("%d\t",A[i]);
+    }
+    return 0;
+    
 }
-
